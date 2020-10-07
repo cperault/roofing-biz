@@ -1,0 +1,25 @@
+.register-container {
+    padding: 15px;
+    text-align: justify;
+    color: black;
+}
+
+.register-container h1 {
+    text-align: center;
+    color: black;
+}
+
+.no-account-p-link {
+    text-align: center;
+}
+
+input:not(input:-webkit-autofill)::-webkit-contacts-auto-fill-button {
+    background-color: black;
+}
+
+.register-container-form-div {
+    margin: 0 auto;
+    padding: 15px;
+    max-width: 80%;
+    text-align: center;
+}

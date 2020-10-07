@@ -1,0 +1,11 @@
+.services-container {
+    padding: 15px;
+    text-align: justify;
+    text-indent: 50px;
+    color: black;
+}
+
+.services-container h1 {
+    text-align: center;
+    color: black;
+}

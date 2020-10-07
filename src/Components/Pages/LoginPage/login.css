@@ -1,0 +1,36 @@
+.login-container {
+    padding: 15px;
+    text-align: justify;
+    color: black;
+}
+
+.login-container h1 {
+    text-align: center;
+    color: black;
+}
+
+.no-account-p-link {
+    text-align: center;
+}
+
+input:not(input:-webkit-autofill)::-webkit-contacts-auto-fill-button {
+    background-color: black;
+}
+
+.login-container-form-div {
+    margin: 0 auto;
+    padding: 15px;
+    max-width: 80%;
+    text-align: center;
+}
+
+.loading-message {
+    color: black;
+    text-align: center;
+}
+
+
+.login-us-form-error-div li {
+    list-style: none;
+    text-align: left;
+}

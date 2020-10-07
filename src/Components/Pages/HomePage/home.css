@@ -1,0 +1,39 @@
+.home-container {
+    padding: 15px;
+    text-align: justify;
+    text-indent: 50px;
+    color: black;
+}
+
+.home-container h1 {
+    text-align: center;
+    color: black;
+}
+
+.left_image, .right_image {
+    height: 300px;
+    border-radius: 5px;
+}
+
+.left_image {
+    float: left;
+    margin-right: 15px;
+}
+
+.right_image {
+    float: right;
+    margin-left: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .left_image {
+        margin-right: 15px;
+    }
+    .right_image {
+        margin-left: 15px;
+    }
+    .left_image, .right_image {
+        width: 200px;
+        height: 200px;
+    }
+}

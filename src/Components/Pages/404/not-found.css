@@ -1,0 +1,15 @@
+.page-not-found-container {
+    height: 500px;
+}
+
+.page-not-found-container h1 {
+    text-align: center;
+    color: black;
+}
+
+.page-not-found-image img {
+    border-radius: 5px;
+    margin-top: 50px;
+    width: 80%;
+    height: 80%;
+}

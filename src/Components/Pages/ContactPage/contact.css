@@ -1,0 +1,8 @@
+.contact-container-social-media-div {
+    margin: auto;
+    display: flex;
+    width: 80%;
+    text-align-last: center;
+    justify-content: space-evenly;
+    margin-top: 40px;
+}
