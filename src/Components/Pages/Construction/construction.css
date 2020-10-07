@@ -1,0 +1,13 @@
+.construction-page-container {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.construction-page-container img {
+    height: 300px;
+    width: 80%;
+    max-width: 400px;
+}

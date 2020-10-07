@@ -10,6 +10,7 @@ import Register from './Components/Pages/RegisterPage/Register.js';
 import Profile from './Components/Pages/ProfilePage/Profile.js';
 import PageNotFound from './Components/Pages/404/PageNotFound.js';
 import ConfirmRegistration from './Components/Pages/RegisterPage/ConfirmRegistration.js';
+import Construction from './Components/Pages/Construction/Construction.js';
 
 const App = () => {
   //set up the ReactJS useState hook to store logged-in user across website
@@ -22,23 +23,33 @@ const App = () => {
   const stateHandler = () => {
     setLoggedInUser([...loggedInUser, SafeLocalStorage("user", "json")]);
   };
+
+  //switch between TRUE and FALSE in .env to show/hide construction
+  const pageUnderConstruction = process.env.REACT_APP_PAGE_UNDER_CONSTRUCTION;
+
   return (
-    <div className="page-container">
-      <SiteNav userIsLoggedIn={userIsLoggedIn} />
-      <BrowserRouter>
-        <Switch>
-          <Route exact path={["/", "/home"]} component={Home} />
-          <Route path={"/services"} component={Services} />
-          <Route path={"/contact"} component={Contact} />
-          <Route path={"/login"} render={() => <Login stateHandler={stateHandler} />} />
-          <Route path={"/register"} component={Register} />
-          <Route path={"/confirm_registration"} component={ConfirmRegistration} />
-          <Route path={"/logout"} component={Home} />
-          <Route path={"/profile"} render={() => <Profile userIsLoggedIn={userIsLoggedIn} />} />
-          <Route component={PageNotFound} />
-        </Switch>
-      </BrowserRouter>
-    </div>
+    pageUnderConstruction === "TRUE"
+      ?
+      <Construction />
+      :
+      (
+        <div className="page-container">
+          <SiteNav userIsLoggedIn={userIsLoggedIn} />
+          <BrowserRouter>
+            <Switch>
+              <Route exact path={["/", "/home"]} component={Home} />
+              <Route path={"/services"} component={Services} />
+              <Route path={"/contact"} component={Contact} />
+              <Route path={"/login"} render={() => <Login stateHandler={stateHandler} />} />
+              <Route path={"/register"} component={Register} />
+              <Route path={"/confirm_registration"} component={ConfirmRegistration} />
+              <Route path={"/logout"} component={Home} />
+              <Route path={"/profile"} render={() => <Profile userIsLoggedIn={userIsLoggedIn} />} />
+              <Route component={PageNotFound} />
+            </Switch>
+          </BrowserRouter>
+        </div >
+      )
   )
 }
 

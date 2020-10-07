@@ -101,7 +101,7 @@ const ContactForm = () => {
                     case 'Last Name':
                         setLastNameError(v);
                         break;
-                    case 'Email Address':
+                    case 'Contact Email':
                         setEmailAddressError(v);
                         break;
                     case 'Message Body':
