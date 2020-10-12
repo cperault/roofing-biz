@@ -1,3 +1,11 @@
+/*************************************************************************************************************
+ *File:         ContactForm.js
+ *Author:       Christopher Perault
+ *Project:      roofing-biz
+ *Date:         October 7, 2020
+ *Description:  This is the contact page form component
+ *************************************************************************************************************/
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TextField, Button } from "@material-ui/core";
@@ -5,12 +13,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import "./contact.css";
 
 const ContactForm = () => {
-  let [contactFirstName, setContactFirstName] = useState("");
-  let [contactLastName, setContactLastName] = useState("");
-  let [contactEmail, setContactEmail] = useState("");
-  let [contactDescriptionText, setContactDescriptionText] = useState("");
+  const [contactFirstName, setContactFirstName] = useState("");
+  const [contactLastName, setContactLastName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactDescriptionText, setContactDescriptionText] = useState("");
+
   //store errors received from backend on form submission
   const [errors, setErrors] = useState([]);
+
   //form field errors to be associated with TextField components and their `helperText` content if an error exists
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
@@ -50,9 +60,7 @@ const ContactForm = () => {
 
   //contact form submission handler to validate data against the backend
   const processContactForm = () => {
-    let formData = [];
-
-    formData = [
+    const formData = [
       contactFirstName,
       contactLastName,
       contactEmail,
@@ -74,8 +82,10 @@ const ContactForm = () => {
           setLastNameError("");
           setEmailAddressError("");
           setMessageBodyError("");
+
           //get the errors returned from the backend
-          let error = JSON.stringify(response.data.rejection_reason);
+          const error = JSON.stringify(response.data.rejection_reason);
+
           //hydrate `setErrors` hook which will then trigger the `useEffect` hook to apply those errors to `helperText` accordingly
           setErrors(JSON.parse(error));
         } else {

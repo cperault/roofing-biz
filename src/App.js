@@ -26,6 +26,7 @@ const App = () => {
   const [loggedInUser, setLoggedInUser] = useState(
     JSON.parse(SafeLocalStorage("user", "json"))
   );
+
   //keep track of if user is logged in
   const userIsLoggedIn = SafeLocalStorage("loggedIn", "false");
 

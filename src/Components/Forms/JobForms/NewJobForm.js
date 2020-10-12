@@ -3,7 +3,7 @@
  *Author:       Christopher Perault
  *Project:      roofing-biz
  *Date:         October 10, 2020
- *Description:  This component consists of the form for requesting a new job
+ *Description:  This is the new job request form component
  *************************************************************************************************************/
 
 import React, { useState, useEffect } from "react";
@@ -58,7 +58,7 @@ const NewJobForm = ({ userAddress = [], userName, userID, newJobDate }) => {
     const jobTypeArray = [];
 
     //iterate through the job type selection
-    for (let c of checked) {
+    for (const c of checked) {
       jobTypeArray.push(c["name"]);
     }
 

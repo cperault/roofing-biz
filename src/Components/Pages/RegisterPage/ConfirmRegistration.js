@@ -11,10 +11,10 @@ const ConfirmRegistration = () => {
     //when this URL is hit, it will trigger the `useEffect` hook to get the values from the URL/activation link
     useEffect(() => {
         //get activation token from the URL
-        let code = window.location.search.replace("?code=", "");
-        let parts = code.split("?email=");
-        let urlActivationToken = parts[0];
-        let urlEmail = parts[1];
+        const code = window.location.search.replace("?code=", "");
+        const parts = code.split("?email=");
+        const urlActivationToken = parts[0];
+        const urlEmail = parts[1];
 
         if (urlActivationToken !== "" && urlEmail !== "") {
             setPageLoading(true);

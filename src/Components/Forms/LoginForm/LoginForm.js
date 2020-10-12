@@ -1,20 +1,30 @@
+/*************************************************************************************************************
+ *File:         LoginForm.js
+ *Author:       Christopher Perault
+ *Project:      roofing-biz
+ *Date:         October 7, 2020
+ *Description:  This is the main App.js component
+ *************************************************************************************************************/
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const LoginForm = ({ userIsLoggedIn, stateHandler }) => {
-  let [loginEmail, setLoginEmail] = useState("");
-  let [loginPassword, setLoginPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
   //store errors from submission of form
   const [errors, setErrors] = useState([]);
+
   //form field errors to be associated with TextField components and their `helperText` content if an error exists
   const [emailAddressError, setEmailAddressError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
   //useState hook to manage the "page loading effect"
   const [pageLoading, setPageLoading] = useState(false);
-  //array to holder user information after logging in
-  let user = [];
+
   const inputStyle = {
     marginBottom: "10px",
     borderRadius: "15px",
@@ -43,7 +53,9 @@ const LoginForm = ({ userIsLoggedIn, stateHandler }) => {
       },
     },
   });
+
   const classes = StyledTextField();
+
   //authentication handler function
   const authenticate = (email, password) => {
     //page-loading effect should display while request is in progress
@@ -59,7 +71,8 @@ const LoginForm = ({ userIsLoggedIn, stateHandler }) => {
           //reset field helperTexts for errors
           setEmailAddressError("");
           setPasswordError("");
-          let error = JSON.stringify(response.data.reasoning);
+
+          const error = JSON.stringify(response.data.reasoning);
           setErrors(JSON.parse(error));
         } else if (response.data.verification === "Inactive") {
           window.location.assign("/confirm_registration");
@@ -81,7 +94,7 @@ const LoginForm = ({ userIsLoggedIn, stateHandler }) => {
                       [6] for .userAddress (array) => [addressName, addressCity, addressState, addressZip]
                   */
 
-          user = [
+          const user = [
             {
               userID: user_object[0].userID,
               firstName: user_object[1].firstName,

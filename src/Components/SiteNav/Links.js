@@ -3,7 +3,7 @@ import "./nav.css";
 
 const Links = ({ userIsLoggedIn }) => {
   //links can be managed here for top/side/bottom nav
-  let links = [
+  const links = [
     { id: 0, href: "/home", title: "Home" },
     { id: 1, href: "/services", title: "Services" },
     {

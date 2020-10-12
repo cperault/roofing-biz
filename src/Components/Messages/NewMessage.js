@@ -119,9 +119,9 @@ const NewMessage = ({ loggedInUser }) => {
   const handleSelect = (event) => {
     setMessageRecipient(event.target.value);
     //get selected index of event target sent
-    let selectedIndex = event.target.options.selectedIndex;
+    const selectedIndex = event.target.options.selectedIndex;
     //get recipient ID
-    let id = event.target.options[selectedIndex].getAttribute("data-key");
+    const id = event.target.options[selectedIndex].getAttribute("data-key");
     setMessageRecipientID(id);
   };
 

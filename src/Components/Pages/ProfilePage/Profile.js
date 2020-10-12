@@ -14,20 +14,6 @@ import MessageInbox from "../../Messages/MessageInbox.js";
 import "./profile.css";
 
 const Profile = ({ loggedInUser }) => {
-  //customer profile should have the following abilities:
-  //ability to request a new job
-  //ability to view open jobs
-  //ability to view all jobs (open and closed/completed)
-  //ability to view account info
-  //ability to view/send messages
-
-  //admin profile should ahve the following abilities:
-  //ability to create new job for specific customer
-  //ability to view all jobs and search/filter/sort (react table) and edit them
-  //ability to pull up a customer's account info including all jobs (open, completed, all)
-  //ability to view/send messages
-  //ability to edit customer account status (update info, delete account, add/update/remove mailing and texting list)
-
   //useState hook to manage state of which job status (open, closed, all) is being viewed
   const [jobStatusBeingViewed, setJobStatusBeingViewed] = useState(
     "open-jobs-tab"
