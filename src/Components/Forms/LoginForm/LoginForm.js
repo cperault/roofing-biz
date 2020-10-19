@@ -161,6 +161,7 @@ const LoginForm = ({ userIsLoggedIn, stateHandler }) => {
         />
         <br />
         <TextField
+          type="password"
           className={classes.root}
           variant="outlined"
           style={inputStyle}

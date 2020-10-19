@@ -47,6 +47,17 @@ const MessageInbox = ({ loggedInUser, userID }) => {
     setOpenModal(!openModal);
   };
 
+  //shorten the inbox/outbox message fields so that the entire message isn't displayed and looking wonky
+  const createMessagePreview = (message) => {
+    if (message.length >= 25) {
+      return message.trim().substring(0, 25) + "...";
+    } else {
+      return message.trim();
+    }
+  };
+
+  //message click handler; displays full view of message in modal where user can also reply or delete the message
+
   return (
     <div className="message-inbox-container">
       <div className="message-inbox-container-tabs">
@@ -66,9 +77,15 @@ const MessageInbox = ({ loggedInUser, userID }) => {
         </div>
       </div>
       {messageType === "received-messages" ? (
-        <ReceivedMessages userID={userID} />
+        <ReceivedMessages
+          userID={userID}
+          createMessagePreview={createMessagePreview}
+        />
       ) : (
-        <SentMessages userID={userID} />
+        <SentMessages
+          userID={userID}
+          createMessagePreview={createMessagePreview}
+        />
       )}
       <br />
       <Button
