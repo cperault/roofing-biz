@@ -13,7 +13,17 @@ import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-const MessageDetails = ({ data }) => {
+const MessageDetails = ({ data, showMessageForm, messageType }) => {
+  //delete message handler
+  const deleteMessageHandler = (messageID) => {
+    //handle deletion of message by ID
+  };
+
+  //message reply handler
+  const replyMessageHandler = (message) => {
+    showMessageForm("reply");
+  };
+
   return (
     <Card>
       <CardContent>
@@ -48,19 +58,25 @@ const MessageDetails = ({ data }) => {
             backgroundColor: "red",
             color: "white",
           }}
+          onClick={() => deleteMessageHandler(data.messageID)}
         >
           Delete
         </Button>
-        <Button
-          variant="contained"
-          size="small"
-          style={{
-            backgroundColor: "black",
-            color: "white",
-          }}
-        >
-          Reply
-        </Button>
+        {messageType === "received" ? (
+          <Button
+            variant="contained"
+            size="small"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+            }}
+            onClick={() => replyMessageHandler(data)}
+          >
+            Reply
+          </Button>
+        ) : (
+          ""
+        )}
       </CardActions>
     </Card>
   );

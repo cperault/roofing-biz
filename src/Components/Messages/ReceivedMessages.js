@@ -14,7 +14,12 @@ import moment from "moment";
 import Modal from "@material-ui/core/Modal";
 import MessageDetails from "./MessageDetails.js";
 
-const ReceivedMessages = ({ userID, createMessagePreview }) => {
+const ReceivedMessages = ({
+  userID,
+  showMessageForm,
+  setCurrentMessage,
+  createMessagePreview,
+}) => {
   //useState hooks to store messages
   const [receivedMessages, setReceivedMessages] = useState([]);
 
@@ -73,7 +78,11 @@ const ReceivedMessages = ({ userID, createMessagePreview }) => {
 
   //message click handler
   const handleMessageClick = (_, rowData) => {
+    //update `currentMessage` hook
+    setCurrentMessage(rowData);
+    //update 'clickedMessage` hook
     setClickedMessage(rowData);
+
     handleModal();
   };
 
@@ -142,7 +151,11 @@ const ReceivedMessages = ({ userID, createMessagePreview }) => {
             </Button>
             <br />
             <br />
-            <MessageDetails data={clickedMessage} />
+            <MessageDetails
+              data={clickedMessage}
+              showMessageForm={showMessageForm}
+              messageType={"received"}
+            />
           </div>
         </div>
       </Modal>

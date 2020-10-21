@@ -14,7 +14,11 @@ import moment from "moment";
 import Modal from "@material-ui/core/Modal";
 import MessageDetails from "./MessageDetails.js";
 
-const SentMessages = ({ userID, createMessagePreview }) => {
+const SentMessages = ({
+  userID,
+  showMessageForm,
+  createMessagePreview,
+}) => {
   //useState hooks to store messages
   const [sentMessages, setSentMessages] = useState([]);
 
@@ -142,7 +146,11 @@ const SentMessages = ({ userID, createMessagePreview }) => {
             </Button>
             <br />
             <br />
-            <MessageDetails data={clickedMessage} />
+            <MessageDetails
+              data={clickedMessage}
+              showMessageForm={showMessageForm}
+              messageType={"sent"}
+            />
           </div>
         </div>
       </Modal>

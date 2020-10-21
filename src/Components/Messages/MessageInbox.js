@@ -10,12 +10,17 @@ import React, { useState } from "react";
 import ReceivedMessages from "../Messages/ReceivedMessages.js";
 import SentMessages from "../Messages/SentMessages.js";
 import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
-import NewMessage from "../Messages/NewMessage.js";
+import MessageForm from "../Forms/MessageForm/MessageForm.js";
 
 const MessageInbox = ({ loggedInUser, userID }) => {
   //hook to manage which type of message is being view (received or sent)
   const [messageType, setMessageType] = useState("received-messages");
+
+  //hook to manage which type of new message will be opened in modal; new message or reply message
+  const [newMessageType, setNewMessageType] = useState("");
+
+  //hook to store current message object reference being viewed
+  const [currentMessage, setCurrentMessage] = useState({});
 
   //message type (received or sent) toggle handler
   const toggleMessageType = (element) => {
@@ -39,14 +44,6 @@ const MessageInbox = ({ loggedInUser, userID }) => {
     }
   };
 
-  //useState hook to manage modal window state
-  const [openModal, setOpenModal] = useState(false);
-
-  //modal handler
-  const handleModal = () => {
-    setOpenModal(!openModal);
-  };
-
   //shorten the inbox/outbox message fields so that the entire message isn't displayed and looking wonky
   const createMessagePreview = (message) => {
     if (message.length >= 25) {
@@ -55,8 +52,14 @@ const MessageInbox = ({ loggedInUser, userID }) => {
       return message.trim();
     }
   };
+  //useState hook to manage modal window state
+  const [openModal, setOpenModal] = useState(false);
 
-  //message click handler; displays full view of message in modal where user can also reply or delete the message
+  //show message form for new message
+  const showMessageForm = (newOrReply) => {
+    setNewMessageType(newOrReply);
+    setOpenModal(!openModal);
+  };
 
   return (
     <div className="message-inbox-container">
@@ -79,11 +82,14 @@ const MessageInbox = ({ loggedInUser, userID }) => {
       {messageType === "received-messages" ? (
         <ReceivedMessages
           userID={userID}
+          showMessageForm={showMessageForm}
+          setCurrentMessage={setCurrentMessage}
           createMessagePreview={createMessagePreview}
         />
       ) : (
         <SentMessages
           userID={userID}
+          showMessageForm={showMessageForm}
           createMessagePreview={createMessagePreview}
         />
       )}
@@ -91,41 +97,20 @@ const MessageInbox = ({ loggedInUser, userID }) => {
       <Button
         variant="contained"
         size="small"
-        onClick={handleModal}
+        onClick={() => showMessageForm("new")}
         style={{ backgroundColor: "black", color: "white" }}
       >
         Compose New Message
       </Button>
-      <Modal open={openModal}>
-        <div
-          className="modal-container"
-          style={{
-            maxHeight: "100%",
-            backgroundColor: "white",
-            border: "solid 1px black",
-            overflowY: "auto",
-          }}
-        >
-          <div className="modal-container-body" style={{ padding: "10px" }}>
-            <Button
-              className="modal-container-close"
-              variant="contained"
-              size="small"
-              style={{
-                float: "right",
-                backgroundColor: "black",
-                color: "white",
-              }}
-              onClick={handleModal}
-            >
-              <span style={{ fontSize: "14px" }}>&times;</span>
-            </Button>
-            <br />
-            <br />
-            <NewMessage loggedInUser={loggedInUser} />
-          </div>
-        </div>
-      </Modal>
+      {newMessageType !== "" && (
+        <MessageForm
+          loggedInUser={loggedInUser}
+          messageType={newMessageType}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          currentMessage={currentMessage}
+        />
+      )}
     </div>
   );
 };

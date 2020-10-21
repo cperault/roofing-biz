@@ -20,14 +20,20 @@ import Select from "@material-ui/core/Select";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 
-const NewMessage = ({ loggedInUser }) => {
+const NewMessage = ({
+  loggedInUser,
+  isReplyMessage = false,
+  currentMessage = {},
+}) => {
   //useState hooks for message form
   const messageSender = loggedInUser[0].userID;
   const [messageRecipientID, setMessageRecipientID] = useState();
   const [messageRecipient, setMessageRecipient] = useState();
-  const [messageSubject, setMessageSubject] = useState("");
+  const [messageSubject, setMessageSubject] = useState(
+    isReplyMessage ? "Re: " + currentMessage.messageSubject : ""
+  );
   const [messageContent, setMessageContent] = useState("");
-  const [allAdmins, setAllAdmins] = useState([]);
+  const [messageUsers, setMessageUsers] = useState([]);
 
   //useState hooks for form errors
   const [errors, setErrors] = useState([]);
@@ -125,18 +131,29 @@ const NewMessage = ({ loggedInUser }) => {
     setMessageRecipientID(id);
   };
 
-  //get all admin users for select menu options
+  //when a new message is loaded, we need to get either all admin users or all customer users
   useEffect(() => {
-    const getAllAdmins = () => {
-      axios
-        .post(process.env.REACT_APP_ENDPOINT + "/get_message_users")
-        .then((response) => {
-          setAllAdmins([]);
-          setAllAdmins(response.data.all_admins);
-        });
-    };
-    getAllAdmins();
-  }, []);
+    //path for getting all customers or all admins
+    let whichPath = "";
+    //whichPath return object will either be `all_admins` or `all_customers`
+    let pathReturnObject = "";
+    if (loggedInUser[0].userRole === "admin") {
+      whichPath = "/get_all_customers";
+      pathReturnObject = "all_customers";
+    } else {
+      whichPath = "/get_message_users";
+      pathReturnObject = "all_admins";
+    }
+
+    //axios request to get users and fill users array for select menu dropdown
+    axios.post(process.env.REACT_APP_ENDPOINT + whichPath).then((response) => {
+      if (pathReturnObject === "all_customers") {
+        setMessageUsers(response.data.all_customers);
+      } else {
+        setMessageUsers(response.data.all_admins);
+      }
+    });
+  }, [loggedInUser]);
 
   //update form errors
   useEffect(() => {
@@ -163,7 +180,11 @@ const NewMessage = ({ loggedInUser }) => {
 
   return (
     <div className="new-message-container">
-      <h2>New Message</h2>
+      <h4>
+        {isReplyMessage
+          ? `Replying to ${currentMessage.senderNameFull}`
+          : "New Message"}
+      </h4>
       <FormControl
         fullWidth
         style={{ marginTop: "10px", marginBottom: "30px" }}
@@ -182,14 +203,14 @@ const NewMessage = ({ loggedInUser }) => {
           }}
         >
           <option value=""></option>
-          {allAdmins.map((admin) => {
+          {messageUsers.map((user) => {
             return (
               <option
-                key={admin.userID}
-                data-key={admin.userID}
-                value={admin.firstName + " " + admin.lastName}
+                key={user.userID}
+                data-key={user.userID}
+                value={user.firstName + " " + user.lastName}
               >
-                {admin.firstName + " " + admin.lastName}
+                {user.firstName + " " + user.lastName}
               </option>
             );
           })}
@@ -207,16 +228,29 @@ const NewMessage = ({ loggedInUser }) => {
         readOnly
         helperText={messageSenderError}
       />
-      <TextField
-        className={classes.root}
-        style={inputStyle}
-        id="message_subject"
-        label="Subject"
-        value={messageSubject}
-        fullWidth
-        onChange={(text) => setMessageSubject(text.target.value)}
-        helperText={messageSubjectError}
-      />
+      {isReplyMessage ? (
+        <TextField
+          className={classes.root}
+          style={inputStyle}
+          id="message_subject"
+          label="Subject"
+          value={"Re: " + currentMessage.messageSubject}
+          fullWidth
+          helperText={messageSubjectError}
+        />
+      ) : (
+        <TextField
+          className={classes.root}
+          style={inputStyle}
+          id="message_subject"
+          label="Subject"
+          value={messageSubject}
+          fullWidth
+          onChange={(text) => setMessageSubject(text.target.value)}
+          helperText={messageSubjectError}
+        />
+      )}
+
       <br />
       <TextField
         className={classes.root}
