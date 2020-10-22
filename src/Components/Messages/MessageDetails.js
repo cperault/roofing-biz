@@ -12,11 +12,26 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 const MessageDetails = ({ data, showMessageForm, messageType }) => {
   //delete message handler
   const deleteMessageHandler = (messageID) => {
-    //handle deletion of message by ID
+    //confirm with user that they wish to delete the message
+    const confirmDelete = window.confirm(
+      "Are you sure that you'd like to delete this message? It can't be undone."
+    );
+    if (confirmDelete) {
+      //handle deletion of message by ID
+      axios
+        .post(process.env.REACT_APP_ENDPOINT + "/delete_message", {
+          messageID: messageID,
+        })
+        .then((response) => {
+          alert(response.data.message_deletion_success);
+          window.location.reload();
+        });
+    }
   };
 
   //message reply handler
