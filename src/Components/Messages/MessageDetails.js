@@ -13,6 +13,8 @@ import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import moment from "moment";
+import { makeStyles } from "@material-ui/core/styles";
 
 const MessageDetails = ({ data, showMessageForm, messageType }) => {
   //delete message handler
@@ -39,25 +41,69 @@ const MessageDetails = ({ data, showMessageForm, messageType }) => {
     showMessageForm("reply");
   };
 
+  const inputStyle = {
+    marginBottom: "10px",
+    borderRadius: "15px",
+    zIndex: "0",
+  };
+
+  const StyledTextField = makeStyles({
+    root: {
+      "& label.Mui-focused": {
+        color: "black",
+      },
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "black",
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "black",
+        },
+        "&:hover fieldset": {
+          borderColor: "black",
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "black",
+        },
+      },
+    },
+  });
+  const classes = StyledTextField();
+
   return (
     <Card>
       <CardContent>
-        From
         <TextField
+          className={classes.root}
+          style={inputStyle}
+          label="From"
           readOnly
           variant="outlined"
           fullWidth
           value={data.senderNameFull}
         />
-        Subject
         <TextField
+          className={classes.root}
+          style={inputStyle}
+          label={messageType === "received" ? "Received" : "Sent"}
+          readOnly
+          variant="outlined"
+          fullWidth
+          value={moment(data.messageTimeStamp).utc().format("MM/DD/YY hh:mm A")}
+        />
+        <TextField
+          className={classes.root}
+          style={inputStyle}
+          label="Subject"
           readOnly
           variant="outlined"
           fullWidth
           value={data.messageSubject}
         />
-        Message
         <TextField
+          className={classes.root}
+          style={inputStyle}
+          label="Message"
           readOnly
           variant="outlined"
           multiline

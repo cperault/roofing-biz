@@ -14,11 +14,7 @@ import moment from "moment";
 import Modal from "@material-ui/core/Modal";
 import MessageDetails from "./MessageDetails.js";
 
-const SentMessages = ({
-  userID,
-  showMessageForm,
-  createMessagePreview,
-}) => {
+const SentMessages = ({ userID, showMessageForm, createMessagePreview }) => {
   //useState hooks to store messages
   const [sentMessages, setSentMessages] = useState([]);
 
@@ -42,14 +38,12 @@ const SentMessages = ({
     },
     {
       field: "messageTimeStamp",
-      title: "Date",
+      title: "Sent On",
       sorting: true,
       searchable: true,
       render: (rowData) =>
         rowData.messageTimeStamp !== null
-          ? moment(rowData.messageTimeStamp)
-              .utc()
-              .format("MM/DD/YYYY  [at] hh:mma")
+          ? moment(rowData.messageTimeStamp).utc().format("MM/DD/YY hh:mm A")
           : "",
     },
     {

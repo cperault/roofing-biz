@@ -13,7 +13,6 @@ import {
   TextField,
   Button,
   FormControl,
-  InputLabel,
   FormHelperText,
 } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
@@ -45,7 +44,9 @@ const NewMessage = ({
   //hook to manage button icon; default is the send arrow but then will be updated to checkmark icon on send
   const [buttonIcon, setButtonIcon] = useState(<SendIcon />);
   //hook to manage button text; default will be "Send" but then be update to "Message Sent" on message send
-  const [buttonText, setButtonText] = useState("Send");
+  const [buttonText, setButtonText] = useState(
+    isReplyMessage ? "Send Reply" : "Send"
+  );
 
   const inputStyle = {
     marginBottom: "10px",
@@ -180,48 +181,65 @@ const NewMessage = ({
 
   return (
     <div className="new-message-container">
-      <h4>
-        {isReplyMessage
-          ? `Replying to ${currentMessage.senderNameFull}`
-          : "New Message"}
-      </h4>
-      <FormControl
-        fullWidth
-        style={{ marginTop: "10px", marginBottom: "30px" }}
-      >
-        <InputLabel htmlFor="admin-recipient" style={{ color: "black" }}>
-          Select message recipient
-        </InputLabel>
-        <Select
-          className={classes.select}
-          native
-          value={messageRecipient}
-          key={messageRecipientID}
-          onChange={handleSelect}
-          inputProps={{
-            id: "admin-recipient",
-          }}
-        >
-          <option value=""></option>
-          {messageUsers.map((user) => {
+      <h4>{isReplyMessage ? "Replying" : "Composing New Message"}</h4>
+      {isReplyMessage ? (
+        messageUsers
+          .filter((user) => user.userID === currentMessage.senderID)
+          .map((user) => {
             return (
-              <option
+              <TextField
+                className={classes.root}
+                style={inputStyle}
+                variant="outlined"
+                label="To"
+                fullWidth
+                readOnly
                 key={user.userID}
                 data-key={user.userID}
                 value={user.firstName + " " + user.lastName}
-              >
-                {user.firstName + " " + user.lastName}
-              </option>
+                selected
+              />
             );
-          })}
-        </Select>
-        {messageRecipientError && (
-          <FormHelperText>{messageRecipientError}</FormHelperText>
-        )}
-      </FormControl>
+          })
+      ) : (
+        <FormControl
+          fullWidth
+          style={{ marginTop: "10px", marginBottom: "30px" }}
+        >
+          <Select
+            className={classes.select}
+            native
+            value={messageRecipient}
+            key={messageRecipientID}
+            onChange={handleSelect}
+            inputProps={{
+              id: "admin-recipient",
+            }}
+          >
+            <option value="" disabled>
+              Select recipient
+            </option>
+            {messageUsers.map((user) => {
+              return (
+                <option
+                  key={user.userID}
+                  data-key={user.userID}
+                  value={user.firstName + " " + user.lastName}
+                >
+                  {user.firstName + " " + user.lastName}
+                </option>
+              );
+            })}
+          </Select>
+          {messageRecipientError && (
+            <FormHelperText>{messageRecipientError}</FormHelperText>
+          )}
+        </FormControl>
+      )}
       <TextField
         className={classes.root}
         style={inputStyle}
+        variant="outlined"
         label="From"
         value={loggedInUser[0].firstName + " " + loggedInUser[0].lastName}
         fullWidth
@@ -232,6 +250,7 @@ const NewMessage = ({
         <TextField
           className={classes.root}
           style={inputStyle}
+          variant="outlined"
           id="message_subject"
           label="Subject"
           value={"Re: " + currentMessage.messageSubject}
@@ -242,6 +261,7 @@ const NewMessage = ({
         <TextField
           className={classes.root}
           style={inputStyle}
+          variant="outlined"
           id="message_subject"
           label="Subject"
           value={messageSubject}
@@ -255,13 +275,12 @@ const NewMessage = ({
       <TextField
         className={classes.root}
         style={inputStyle}
+        variant="outlined"
         id="message_content"
         label="Message"
         multiline
         rows="4"
         rowsMax="10"
-        margin="normal"
-        variant="outlined"
         fullWidth
         value={messageContent}
         onChange={(text) => setMessageContent(text.target.value)}

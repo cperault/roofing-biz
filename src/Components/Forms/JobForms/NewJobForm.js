@@ -175,62 +175,36 @@ const NewJobForm = ({ userAddress = [], userName, userID, newJobDate }) => {
   }, [errors]);
   return (
     <div className="new-job-form">
-      <h2>Requesting New Job</h2>
-      <InputLabel htmlFor="user-name">Name on Request</InputLabel>
+      <h4>Requesting new Job</h4>
       <TextField
+        label="Name on Request"
+        className={classes.root}
+        style={inputStyle}
         variant="outlined"
         value={userName}
         readOnly
         fullWidth
+      />
+      <TextField
+        label="Date of Request"
         className={classes.root}
         style={inputStyle}
-        InputProps={{
-          style: {
-            color: "black",
-          },
-        }}
-        inputProps={{
-          id: "user-name",
-        }}
-      />
-      <br />
-      <br />
-      <InputLabel htmlFor="new-job-date">Date of Request</InputLabel>
-      <TextField
-        className={classes.root}
+        variant="outlined"
         value={newJobDate}
         fullWidth
-        InputProps={{
-          style: {
-            color: "black",
-          },
-        }}
-        inputProps={{
-          id: "new-job-date",
-        }}
       />
-      <br />
-      <br />
-      <InputLabel htmlFor="new-job-description">Description</InputLabel>
       <TextField
+        label="Description"
         className={classes.root}
+        style={inputStyle}
+        variant="outlined"
+        placeholder="What can we do?"
         multiline
         rows="4"
         rowsMax="10"
-        margin="normal"
-        variant="outlined"
-        placeholder="What can we do?"
         fullWidth
         value={jobDescription}
         onChange={(text) => setJobDescription(text.target.value)}
-        InputProps={{
-          style: {
-            color: "black",
-          },
-        }}
-        inputProps={{
-          id: "new-job-description",
-        }}
         helperText={jobDescriptionError}
       />
 

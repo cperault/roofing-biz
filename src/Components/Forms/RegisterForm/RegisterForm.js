@@ -114,6 +114,7 @@ const RegisterForm = ({ loggedInUser, userIsLoggedIn }) => {
       .then((response) => {
         setPageLoading(false);
         if (response.data.status === "result") {
+          //TODO: check into this response object
           alert(JSON.stringify(response.data.details));
         } else if (response.data.verification === "Failed") {
           //reset field helperTexts for errors

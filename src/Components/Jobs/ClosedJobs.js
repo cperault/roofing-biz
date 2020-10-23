@@ -37,7 +37,7 @@ const ClosedJobs = ({ loggedInUser }) => {
       type: "datetime",
       render: (rowData) =>
         rowData.jobDateSubmitted !== null
-          ? moment(rowData.jobDateSubmitted).utc().format("MM/DD/YYYY")
+          ? moment(rowData.jobDateSubmitted).utc().format("MM/DD/YY")
           : "",
     },
     {
@@ -48,7 +48,7 @@ const ClosedJobs = ({ loggedInUser }) => {
       type: "datetime",
       render: (rowData) =>
         rowData.jobDateCompleted !== null
-          ? moment(rowData.jobDateCompleted).utc().format("MM/DD/YYYY")
+          ? moment(rowData.jobDateCompleted).utc().format("MM/DD/YY")
           : "",
     },
     {

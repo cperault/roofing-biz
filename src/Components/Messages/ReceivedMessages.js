@@ -43,14 +43,12 @@ const ReceivedMessages = ({
     },
     {
       field: "messageTimeStamp",
-      title: "Date",
+      title: "Received On",
       sorting: true,
       searchable: true,
       render: (rowData) =>
         rowData.messageTimeStamp !== null
-          ? moment(rowData.messageTimeStamp)
-              .utc()
-              .format("MM/DD/YYYY [at] hh:mma")
+          ? moment(rowData.messageTimeStamp).utc().format("MM/DD/YY hh:mm A")
           : "",
     },
     {
