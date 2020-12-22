@@ -1,5 +1,5 @@
 # Welcome to Roofing Biz
-Business website for a local roofing, siding, and gutters company; this is a redesign/refactoring (WIP) of the original SCC Capstone project.
+Business website for a local roofing, siding, and gutters company; this is a redesign/refactoring (WIP) of the [original SCC Capstone project[(https://github.com/cperault/roofmasters).
 
 # Photo Credits
 
